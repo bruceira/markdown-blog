@@ -1,24 +1,22 @@
 const express = require("express")
+const mongoose = require('mongoose')
 const articleRouter = require("./routes/article")
+const article = require("./models/articleModel")
 const app = new express()
 
 
-app.use("/articles", articleRouter)
+mongoose.connect("mongodb://localhost/blog", () => {
+  useUnifiedTopology: true
+  console.log("Db connected")
+})
+
 app.set('view engine', 'ejs');
 
-app.get("/", (req, res) => {
-  const articles = [
-    {
-      title: "Test aricle 1",
-      createAt: new Date(),
-      description: "Hello this is my fst article.........."
-    },
-    {
-      title: "Test aricle 2",
-      createAt: new Date(),
-      description: "Hello this is my fst article.........."
-    }
-  ]
+app.use(express.urlencoded({ extended: false }))
+app.use("/articles", articleRouter)
+
+app.get("/", async (req, res) => {
+  const articles = await article.find().sort({ createdAt: 'desc' })
   res.render("articles/index", { articles })
 })
 app.listen(5000, () => {
