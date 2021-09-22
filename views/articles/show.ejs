@@ -14,14 +14,10 @@
       <%= article.createdAt.toLocaleDateString() %>
     </div>
     <a href="/" class="btn btn-secondary">All Articles</a>
-    <a href="/articles/edit/<%= article.slug %>" class="btn btn-info">Edit</a>
-
-    <div class="text-muted mb-1">
-      <%= article.description %>
-    </div>
+    <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
 
     <div>
-      <%- article.sanitizedHtml %>
+      <%- article.markdown %>
     </div>
   </div>
 </body>
