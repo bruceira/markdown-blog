@@ -1,5 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const methodOverride = require("method-override")
 const articleRouter = require("./routes/articleRouter")
 const articleModel = require("./models/articleModel")
 
@@ -12,6 +13,7 @@ const app = new express()
 
 app.use(express.urlencoded({ extended: false }))
 app.set("view engine", 'ejs')
+app.use(methodOverride("_method"))
 app.use("/articles", articleRouter)
 
 app.get("/", async (req, res) => {
@@ -20,6 +22,4 @@ app.get("/", async (req, res) => {
 })
 
 const port = 5000
-app.listen(port, () => {
-  console.log(`Server is running to the port ${port}`)
-})
+app.listen(port)
